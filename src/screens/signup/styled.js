@@ -5,7 +5,7 @@ import { primaryColor } from "../../constants/colors";
 export const Wrapper = styled.div` 
   width: 100vw;
   max-width: 420px;
-  height: 100vh;
+  height: 100%;
   display: flex;
   justify-content: center;
   margin: 0 auto;
@@ -27,7 +27,8 @@ export const FormConteiner = styled.form`
   display: grid;
   gap: 1.5em;
   align-self: center;
-  width: 338px;
+  width: 100%;
+  height: 100%;
   max-width: 300px;
   border-radius: 2px;
 `

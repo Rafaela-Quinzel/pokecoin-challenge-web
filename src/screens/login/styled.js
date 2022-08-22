@@ -19,7 +19,7 @@ export const Logo = styled.img`
 export const FormInputsLogin = styled.form`
   display: grid;
   gap: 1.6em;
-  width: 338px;
+  width: 100%;
   max-width: 320px;
   border-radius: 2px;
   /* margin: 4% 10% 5% 15%; */

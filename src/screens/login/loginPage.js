@@ -60,10 +60,10 @@ function LoginPage() {
 
   return (
     <S.Wrapper>
-      <Box style={{ width: "50vw", height: "30%", marginTop: '100px' }}>
+      <Box style={{ width: "80vw", height: "30%", marginTop: '100px', backgroundColor: '#b8bdc5'}}>
         <Card>
           <CardContent style={{ display: 'grid', justifyItems: 'center', alignItems: 'center' }}>
-            <S.Logo src={pokecoin} style={{ width: "25%", height: "50%" }} />
+            <S.Logo src={pokecoin} style={{ width: "24%", height: "60%" }} />
             {/* <S.Logo src={pokecoin} style={{ width: "40%", height: "50%"}}/> */}
             <Typography gutterBottom variant="h5" component="div" style={{ color: 'rgb(238, 136, 34)', fontWeight: "bold" }}>
               POKECOIN

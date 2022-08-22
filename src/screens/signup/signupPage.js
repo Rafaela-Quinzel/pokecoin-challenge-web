@@ -74,12 +74,12 @@ function SignUpPage() {
 
   return (
     <S.Wrapper>
-      <Box style={{ width: "50vw", height: "35%", marginTop: '100px' }}>
+      <Box style={{ width: "80vw", margin: '10% auto 15% auto', backgroundColor: '#b8bdc5' }}>
         <Card>
           <CardContent style={{ display: 'grid', justifyItems: 'center', alignItems: 'center' }}>
             <Lottie options={defaultOptions}
-              height={200}
-              width={200}
+              height={120}
+              width={170}
               isStopped={animationState.isStopped}
               isPaused={animationState.isPaused}
             />
