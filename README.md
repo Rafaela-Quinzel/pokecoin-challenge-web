@@ -1,6 +1,6 @@
 # pokecoin-challenge-web
 
-<h1>PokeCoin</h1> [![pokeball](https://cdn3.emoji.gg/emojis/pokeball.png)](https://emoji.gg/emoji/pokeball)
+<h1>PokeCoin [![pokeball](https://cdn3.emoji.gg/emojis/pokeball.png)](https://emoji.gg/emoji/pokeball)</h1> 
 
 <h2 align="center">
 </h2>
