@@ -1,8 +1,8 @@
 import React from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
-import '../styles/global.css'
-import Router from '../routes/router';
-import MainAppBar from '../components/mainAppBar/mainAppBar';
+import './styles/global.css'
+import Router from './routes/router';
+import MainAppBar from './components/mainAppBar/mainAppBar';
 
 function App() {
   window.document.title = "Pokecoin";
