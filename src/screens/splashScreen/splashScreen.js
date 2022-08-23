@@ -38,8 +38,8 @@ function SplashScreen() {
       <S.AnimationContainer>
         <S.TitleContainer>Carregando...</S.TitleContainer>
       <Lottie options={defaultOptions}
-        height={350}
-        width={550}
+        height={200}
+        width={300}
         isStopped={animationState.isStopped}
         isPaused={animationState.isPaused}
       />
