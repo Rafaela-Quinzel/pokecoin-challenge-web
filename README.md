@@ -1,9 +1,6 @@
 # pokecoin-challenge-web
 
-<div style="display: flex; justify-content: space-around; align-items: center; width: 300px;"> <a href="https://emoji.gg/emoji/pokeball"><img src="https://cdn3.emoji.gg/emojis/pokeball.png" width="28px" height="28px" alt="pokeball"></a>
-<h1>PokeCoin </h1>
-<a href="https://emoji.gg/emoji/pokeball"><img src="https://cdn3.emoji.gg/emojis/pokeball.png" width="28px" height="28px" alt="pokeball"></a>
-</div>
+<h1>PokeCoin <a href="https://emoji.gg/emoji/pokeball"><img src="https://cdn3.emoji.gg/emojis/pokeball.png" width="28px" height="28px" alt="pokeball"></a></h1>
 
 <h2 align="center">
 </h2>
