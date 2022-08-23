@@ -17,4 +17,5 @@ app.get('/*', function (req, res) {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
+console.log(`App is running at th port:${port}`);
 app.listen(port);
