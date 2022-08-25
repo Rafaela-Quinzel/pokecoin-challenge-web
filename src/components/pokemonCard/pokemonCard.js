@@ -10,7 +10,6 @@ import {
     Typography,
     CardActions,
     Button,
-    CardActionArea,
     CardMedia
 } from "@material-ui/core";
 
@@ -42,7 +41,6 @@ function PokemonCard(props) {
                         >
                             detalhes
                         </Button>
-
                     </CardActions>
                 </Card>
             </Box>

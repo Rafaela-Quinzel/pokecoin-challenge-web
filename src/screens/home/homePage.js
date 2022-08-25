@@ -21,7 +21,7 @@ function HomePage() {
       <ReactLoading type='spinningBubbles' color="#fff" />
     </S.LoadingContainer>
   ) : (
-    < S.MainContainer >
+    <S.MainContainer>
       <S.CardContainer>
         {getPokemons && getPokemons?.pokemons?.map((poke) => {
           return (
@@ -31,7 +31,7 @@ function HomePage() {
             />
           )
         })}
-      </S.CardContainer >
+      </S.CardContainer>
     </S.MainContainer >
   )
 }
