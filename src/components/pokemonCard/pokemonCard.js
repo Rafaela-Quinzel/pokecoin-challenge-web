@@ -1,6 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { goToDetailsPokemon } from '../../routes/coordinator';
+import * as S from './styled';
 
 import {
     Box,
@@ -19,9 +20,9 @@ function PokemonCard(props) {
     const history = useHistory()
 
     return (
-        <Box style={{ width: "85%", height: "80%" }}>
-            <Card sx={{ maxWidth: 340 }}>
-                <CardActionArea>
+        <S.CardContainer>
+            <Box style={{ width: "100%", height: "100%" }}>
+                <Card sx={{ maxWidth: 340 }}>
                     <CardContent style={{ alignItems: 'center' }}>
                         <Typography gutterBottom variant="h5" component="div" color="primary">
                             {props.pokemon.name}
@@ -43,9 +44,9 @@ function PokemonCard(props) {
                         </Button>
 
                     </CardActions>
-                </CardActionArea>
-            </Card>
-        </Box>
+                </Card>
+            </Box>
+        </S.CardContainer>
     )
 }
 export default PokemonCard;
