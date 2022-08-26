@@ -34,11 +34,9 @@ function pokemonDetailsPage() {
   }, []);
 
   const btcValue = Number(data && data.ticker.buy) / 100000000;
-  console.log('btcValue: ', btcValue)
-  console.log('base_experience: ', getPokemon.pokemon && getPokemon.pokemon.base_experience)
 
   let BTC = btcValue * Number(getPokemon.pokemon && getPokemon.pokemon.base_experience);
-  console.log('BTC: ', BTC)
+
   let buyValue = BTC * changeValue;
 
   const handlePurchese = async () => {
@@ -64,7 +62,7 @@ function pokemonDetailsPage() {
 
   return (
     <S.MainContainer>
-      <Box style={{ marginTop: '80px' }}>
+      <Box style={{ width: '70%', maxWidth: '550px', margin: '100px auto' }}>
         <Card>
           <CardContent style={{ padding: '0 auto', textItems: 'center' }}>
             <Typography gutterBottom variant="h3" component="div" color="primary">
@@ -77,24 +75,22 @@ function pokemonDetailsPage() {
               style={{ width: '60%', margin: 'auto' }}
             />
           </CardContent>
-          <CardContent style={{ background: 'rgb(238, 136, 34)' }}>
+          <CardContent style={{ background: 'rgb(238, 136, 34)', height: '50px', display: 'flex', alignItems: 'center' }}>
             <Typography
               variant="body2"
-              color="secondary"
               style={{ margin: '2% 6%', fontWeight: 'bold', fontSize: '22px', color: '#252525' }}
             >
               {getPokemon.pokemon && getPokemon.pokemon.types[0] && getPokemon.pokemon.types[0].type.name.toUpperCase()}
             </Typography>
 
           </CardContent>
-          <CardContent style={{ background: '#e0ba61', display: 'flex' }}>
+          <CardContent style={{ background: '#e0ba61', display: 'flex', height: '50px', alignItems: 'center' }}>
             <Typography
               variant="body2"
-              color="secondary"
               style={{
                 margin: '2% 6%',
                 fontWeight: 'bold',
-                fontSize: '18px',
+                fontSize: '1rem',
                 color: '#252525'
               }}>
               XP: {getPokemon.pokemon && getPokemon.pokemon.base_experience}
@@ -105,7 +101,7 @@ function pokemonDetailsPage() {
               style={{
                 margin: '2% 6%',
                 fontWeight: 'bold',
-                fontSize: '18px',
+                fontSize: '1rem',
                 color: '#252525'
               }}>
               BTC: {getPokemon.pokemon && getPokemon.pokemon.base_experience}
@@ -118,7 +114,7 @@ function pokemonDetailsPage() {
               style={{
                 margin: '0 6%',
                 fontWeight: 'bold',
-                fontSize: '18px',
+                fontSize: '1rem',
                 color: '#252525'
               }}>
               {`${changeValue} ${getPokemon.pokemon && getPokemon.pokemon.name} equivalem a BTC ${buyValue}`}
@@ -127,7 +123,7 @@ function pokemonDetailsPage() {
           <CardActions style={{ display: 'flex', justifyContent: 'center', padding: '45px 0' }}>
             <Button
               color="primary"
-              size="large"
+              size="small"
               variant="contained"
               style={{ width: '75%', padding: '16px', fontSize: '1.2rem' }}
               onClick={() => handlePurchese()}

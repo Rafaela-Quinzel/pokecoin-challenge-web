@@ -5,7 +5,9 @@ export const MainContainer = styled.div`
   color: white;
   display: flex;
   width: 100%;
+  height: 100px;
   margin: 0;
+  font-size: 1rem;
 `
 
 export const TitleHeader = styled.h2`

@@ -20,7 +20,7 @@ const MainAppBar = () => {
           <S.ButtonsContainer>
             <Button
               color="inherit"
-              style={{marginLeft: '20px'}}
+              style={{marginLeft: '24px', marginRight: '25px'}}
               onClick={() => goToPokemonsUser(history)}
             >
               Meus pokemons
