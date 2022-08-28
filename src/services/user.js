@@ -6,7 +6,7 @@ export const login = (body, history) => {
     axios.post(`${BASE_URL}user/login`, body)
     .then(response => {
         localStorage.setItem('token', response.data.token);
-        alert('Bem vindo(a)!');
+        alert(`Bem vindo(a) ${response.data.user.name}!`);
         goToHome(history)
     }).catch(error => {
         console.log(error.message);
@@ -16,7 +16,7 @@ export const login = (body, history) => {
 export const signUp = (body, history) => {
     axios.post(`${BASE_URL}user/register`, body)
         .then(response => {
-            window.localStorage.setItem('token', response.data.token);
+            localStorage.setItem('token', response.data.token);
             alert('Cadastro efetuado com sucesso!');
             goToHome(history);
         }).catch(error => {

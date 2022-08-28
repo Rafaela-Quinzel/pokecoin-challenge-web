@@ -5,16 +5,19 @@ import * as S from './styled';
 import { BASE_URL, axiosConfig } from '../../constants/requestConfig'
 import { useRequestData } from '../../hooks/useRequestData';
 import PokemonCard from '../../components/pokemonCard/pokemonCard';
+import { useProtectPage } from '../../hooks/useProtectPage';
 
 
 function HomePage() {
   const [isLoading, setIsLoading] = useState(false);
 
-  const getPokemons = useRequestData(`${BASE_URL}pokemon`, undefined, axiosConfig);
+  useProtectPage();
+
+  const getPokemons = useRequestData(`${BASE_URL}pokemon`, axiosConfig);
 
   useEffect(() => {
     if (typeof getPokemons === 'object' && Object.keys(getPokemons).length === 0) setIsLoading(true);
-  }, []);
+  }, [getPokemons]);
 
   return isLoading === true ? (
     <S.LoadingContainer>

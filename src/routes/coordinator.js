@@ -25,6 +25,8 @@ export const goBack = (history) => {
 export const logout = (history) => {
     if (window.confirm('Você tem certeza que deseja sair :( ?')) {
         localStorage.removeItem("token");
+        window.location.reload();
+        //localStorage.clear();
         history.push('/login');
     }
 }
