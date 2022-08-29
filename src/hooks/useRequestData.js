@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import Swal from 'sweetalert2';
 import { axiosConfig } from '../constants/requestConfig';
 
 
@@ -22,7 +23,14 @@ export function useRequestData(url, initialState) {
             axios.create({
                 withCredentials: true
                 })
-        })().catch(e=>alert(e));
+        })().catch(error => {
+            Swal.fire({
+                icon: 'error',
+                text: 'Ocorreu uma falha interna, tente novamente mais tarde.',
+                confirmButtonText: "OK",
+                customClass: 'swal-wide-error'
+            });
+        });
     }, [url]);
 
     return data;

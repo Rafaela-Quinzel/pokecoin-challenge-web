@@ -58,7 +58,7 @@ export const shell = async (body, history) => {
 export const getHistoryTicker = async (setData) => {
     await axios.get(`${BASE_URL}transactions/ticker`, axiosConfig)
         .then(response => {
-            setData(response.data.data);
+            setData(response.data);
         }).catch(error => {
             console.log(error.message);
             Swal.fire({
@@ -74,7 +74,8 @@ export const getHistoryTicker = async (setData) => {
 export const getTransactionsUser = async (setTransactions) => {
     await axios.get(`${BASE_URL}transactions`, axiosConfig)
         .then(response => {
-            setTransactions(response.data.transactions);
+            setTransactions(response.data);
+            //setTransactions(response.data.transactions);
         }).catch(error => {
             console.log(error.message);
             Swal.fire({

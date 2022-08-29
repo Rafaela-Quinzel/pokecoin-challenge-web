@@ -22,7 +22,7 @@ export const login = (body, history) => {
 
         }).catch(error => {
             console.log(error.message);
-            if (error.response.status === 404) {
+            if (error.response.status === 400) {
                 Swal.fire({
                     icon: 'error',
                     text: 'Usuário ou senha inválidos!',

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Swal from 'sweetalert2';
 import { shell, getHistoryTicker } from '../../services/transactions';
 
 import {
@@ -13,6 +14,7 @@ import {
 
 
 function PokemonUserCard(props) {
+    const [changeValue, setChangeValue] = useState(0);
     const [data, setData] = useState(undefined);
 
     useEffect(() => {
@@ -22,31 +24,58 @@ function PokemonUserCard(props) {
 
     const btcValue = Number(data && data.ticker.buy) / 100000000;
 
-    const handleSell = async (pokemon) => {
+    const handleSell = (pokemon) => {
+        Swal.fire({
+            title: 'Quantos você deseja vender?',
+            input: 'number',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'VENDER',
+            cancelButtonText: 'CANCELAR',
+            reverseButtons: true
+        }).then((change) => {
+            if (change.value) {
+                setChangeValue(change.value);
+                Swal.fire({
+                    icon: 'question',
+                    text: `Você confirmar a venda de ${change.value} ${pokemon.pokemonName}?`,
+                    showCancelButton: true,
+                    confirmButtonText: 'CONTINUAR',
+                    cancelButtonText: 'CANCELAR',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        let BTC = btcValue * Number(pokemon.pokemonBaseXP);
 
-        let BTC = btcValue * Number(pokemon.pokemonBaseXP);
+                        const data = {
+                            type: "sell",
+                            pokemon: {
+                                name: pokemon.pokemonName,
+                                image: pokemon.pokemonImage,
+                                id: pokemon.pokemonId,
+                                types: pokemon.pokemonTypes,
+                                baseXP: pokemon.pokemonBaseXP,
+                            },
+                            info: {
+                                BTCDay: BTC,
+                                quotas: pokemon.quotas,
+                                value: pokemon.value
+                            }
+                        }
 
-        const data = {
-            type: "sell",
-            pokemon: {
-                name: pokemon.pokemonName,
-                image: pokemon.pokemonImage,
-                id: pokemon.pokemonId,
-                types: pokemon.pokemonTypes,
-                baseXP: pokemon.pokemonBaseXP,
-            },
-            info: {
-                BTCDay: BTC,
-                quotas: pokemon.quotas,
-                value: pokemon.value
+                        shell(data);
+
+                    } else if (
+                        result.dismiss === Swal.DismissReason.cancel
+                    ) {
+                        Swal.fire('Venda cancelada!')
+                    }
+                });
             }
-        }
-
-        shell(data);
+        });
     }
 
     return (
-        <Box style={{ width: "100%", height: "100%" }}>
+        <Box style={{ width: "100%", height: "100%", maxWidth: '300px' }}>
             <Card sx={{ maxWidth: 340 }}>
                 <CardContent style={{ alignItems: 'center' }}>
                     <Typography gutterBottom variant="h5" component="div" color="primary">

@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import * as S from './styled';
 
 import { BASE_URL, axiosConfig } from '../../constants/requestConfig'
@@ -35,34 +36,65 @@ function pokemonDetailsPage() {
 
   const btcValue = Number(data && data.ticker.buy) / 100000000;
 
-  let BTC = btcValue * Number(getPokemon.pokemon && getPokemon.pokemon.base_experience);
+  let BTC = btcValue * Number(getPokemon?.pokemon?.base_experience);
 
   let buyValue = BTC * changeValue;
 
-  const handlePurchese = async () => {
-    const data = {
-      type: "buy",
-      pokemon: {
-        name: getPokemon.pokemon.name,
-        image: getPokemon.pokemon.image,
-        id: getPokemon.pokemon.id,
-        types: getPokemon.pokemon.types[0].type.name,
-        baseXP: getPokemon.pokemon.base_experience,
-      },
-      info: {
-        BTCDay: BTC,
-        quotas: changeValue,
-        value: buyValue
+  const handlePurchese = () => {
+    Swal.fire({
+      title: 'Quantos você deseja comprar?',
+      input: 'number',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'COMPRAR',
+      cancelButtonText: 'CANCELAR',
+      reverseButtons: true
+    }).then((change) => {
+      console.log('change', change);
+      if (change.value) {
+        setChangeValue(change.value);
+        Swal.fire({
+          icon: 'info',
+          text: `${change.value} ${getPokemon.pokemon && getPokemon.pokemon.name} equivalem a BTC ${buyValue}`,
+          showCancelButton: true,
+          confirmButtonText: 'CONTINUAR',
+          cancelButtonText: 'CANCELAR',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            console.log('VALUE', change.value);
+            const data = {
+              type: "buy",
+              pokemon: {
+                name: getPokemon.pokemon.name,
+                image: getPokemon.pokemon.image,
+                id: getPokemon.pokemon.id,
+                types: getPokemon.pokemon.types[0].type.name,
+                baseXP: getPokemon.pokemon.base_experience,
+              },
+              info: {
+                BTCDay: BTC,
+                quotas: change.value,
+                value: buyValue
+              }
+            }
+
+            purchase(data);
+
+          } else if (
+            result.dismiss === Swal.DismissReason.cancel
+          ) {
+            Swal.fire(
+              'Compra cancelada!',
+            )
+          }
+        })
       }
-    }
-
-    purchase(data);
-
+    });
   }
 
   return (
     <S.MainContainer>
-      <Box style={{ width: '70%', maxWidth: '550px', margin: '100px auto' }}>
+      <Box style={{ width: '70%', maxWidth: '550px', margin: '100px auto 50px auto' }}>
         <Card>
           <CardContent style={{ padding: '0 auto', textItems: 'center' }}>
             <Typography gutterBottom variant="h3" component="div" color="primary">
