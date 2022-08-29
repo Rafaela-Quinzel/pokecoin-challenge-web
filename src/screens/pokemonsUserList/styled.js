@@ -2,20 +2,19 @@ import styled from 'styled-components';
 
 export const MainContainer = styled.div`
   width: 100vw;
-  height: 100vh;
-  align-items: center;
-  padding: 2%;
-  box-sizing: border-box;
+  height: 100%;
   background-color: #292929;
   margin: 0;
+  padding: 60px 50px 50px 50px;
+  box-sizing: border-box;
 `
 
 export const CardContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-row-gap: 3.4rem;
-  grid-column-gap: 2rem;
-  margin-top: 120px;
+  margin: 100px auto 150px auto;
+  width: 100%;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
 `
 
 export const NoResults = styled.div`

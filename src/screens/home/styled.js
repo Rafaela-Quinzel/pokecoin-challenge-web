@@ -2,18 +2,28 @@ import styled from 'styled-components';
 
 export const MainContainer = styled.div`
   width: 100vw;
-  height: 100%;
+  display: flex;
+  justify-content: center;
   align-items: center;
-  padding: 2%;
-  box-sizing: border-box;
   background-color: #292929;
   margin: 0;
+  padding: 0;
+`
+
+export const LoadingContainer = styled.div`
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  background-color: #292929;
 `
 
 export const CardContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-row-gap: 3.4rem;
-  grid-column-gap: 2rem;
-  margin-top: 120px;
+  margin: 120px auto 150px auto;
+  width: 80%;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2.5rem;
 `

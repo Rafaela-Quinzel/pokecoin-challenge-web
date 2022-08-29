@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import * as S from './styled';
 
 import { BASE_URL, axiosConfig } from '../../constants/requestConfig'
@@ -15,14 +16,13 @@ import {
   Typography,
   CardActions,
   Button,
-  CardActionArea,
   CardMedia
 } from "@material-ui/core";
 
 
 function pokemonDetailsPage() {
-  const [changeValue, setChangeValue] = React.useState(1);
-  const [data, setData] = React.useState(undefined);
+  const [changeValue, setChangeValue] = useState(1);
+  const [data, setData] = useState(undefined);
 
   useProtectPage();
 
@@ -35,109 +35,134 @@ function pokemonDetailsPage() {
   }, []);
 
   const btcValue = Number(data && data.ticker.buy) / 100000000;
-  console.log('btcValue: ', btcValue)
-  console.log('base_experience: ', getPokemon.pokemon && getPokemon.pokemon.base_experience)
 
-  let BTC = btcValue * Number(getPokemon.pokemon && getPokemon.pokemon.base_experience);
-  console.log('BTC: ', BTC)
+  let BTC = btcValue * Number(getPokemon?.pokemon?.base_experience);
+
   let buyValue = BTC * changeValue;
 
-  const handlePurchese = async () => {
-    const data = {
-      type: "buy",
-      pokemon: {
-        name: getPokemon.pokemon.name,
-        image: getPokemon.pokemon.image,
-        id: getPokemon.pokemon.id,
-        types: getPokemon.pokemon.types[0].type.name,
-        baseXP: getPokemon.pokemon.base_experience,
-      },
-      info: {
-        BTCDay: BTC,
-        quotas: changeValue,
-        value: buyValue
+  const handlePurchese = () => {
+    Swal.fire({
+      title: 'Quantos você deseja comprar?',
+      input: 'number',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'COMPRAR',
+      cancelButtonText: 'CANCELAR',
+      reverseButtons: true
+    }).then((change) => {
+      console.log('change', change);
+      if (change.value) {
+        setChangeValue(change.value);
+        Swal.fire({
+          icon: 'info',
+          text: `${change.value} ${getPokemon.pokemon && getPokemon.pokemon.name} equivalem a BTC ${buyValue}`,
+          showCancelButton: true,
+          confirmButtonText: 'CONTINUAR',
+          cancelButtonText: 'CANCELAR',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            console.log('VALUE', change.value);
+            const data = {
+              type: "buy",
+              pokemon: {
+                name: getPokemon.pokemon.name,
+                image: getPokemon.pokemon.image,
+                id: getPokemon.pokemon.id,
+                types: getPokemon.pokemon.types[0].type.name,
+                baseXP: getPokemon.pokemon.base_experience,
+              },
+              info: {
+                BTCDay: BTC,
+                quotas: change.value,
+                value: buyValue
+              }
+            }
+
+            purchase(data);
+
+          } else if (
+            result.dismiss === Swal.DismissReason.cancel
+          ) {
+            Swal.fire(
+              'Compra cancelada!',
+            )
+          }
+        })
       }
-    }
-
-    purchase(data);
-
+    });
   }
 
   return (
     <S.MainContainer>
-      <Box style={{ marginTop: '80px' }}>
+      <Box style={{ width: '70%', maxWidth: '550px', margin: '100px auto 50px auto' }}>
         <Card>
-          <CardActionArea >
-            <CardContent style={{ padding: '0 auto', textItems: 'center' }}>
-              <Typography gutterBottom variant="h3" component="div" color="primary">
-                {getPokemon.pokemon && getPokemon.pokemon.name}
-              </Typography>
-              <CardMedia
-                component="img"
-                image={getPokemon.pokemon && getPokemon.pokemon.image}
-                alt="pokemon image"
-                style={{ width: '60%', margin: 'auto' }}
-              />
-            </CardContent>
-            <CardContent style={{ background: 'rgb(238, 136, 34)' }}>
-              <Typography
-                variant="body2"
-                color="text.secondary"
-                style={{ margin: '2% 6%', fontWeight: 'bold', fontSize: '22px' }}
-              >
-                {getPokemon.pokemon && getPokemon.pokemon.types[0] && getPokemon.pokemon.types[0].type.name.toUpperCase()}
-              </Typography>
+          <CardContent style={{ padding: '0 auto', textItems: 'center' }}>
+            <Typography gutterBottom variant="h3" component="div" color="primary">
+              {getPokemon.pokemon && getPokemon.pokemon.name}
+            </Typography>
+            <CardMedia
+              component="img"
+              image={getPokemon.pokemon && getPokemon.pokemon.image}
+              alt="pokemon image"
+              style={{ width: '60%', margin: 'auto' }}
+            />
+          </CardContent>
+          <CardContent style={{ background: 'rgb(238, 136, 34)', height: '50px', display: 'flex', alignItems: 'center' }}>
+            <Typography
+              variant="body2"
+              style={{ margin: '2% 6%', fontWeight: 'bold', fontSize: '22px', color: '#252525' }}
+            >
+              {getPokemon.pokemon && getPokemon.pokemon.types[0] && getPokemon.pokemon.types[0].type.name.toUpperCase()}
+            </Typography>
 
-            </CardContent>
-            <CardContent style={{ background: '#e0ba61', display: 'flex' }}>
-              <Typography
-                variant="body2"
-                color="text.secondary"
-                style={{
-                  margin: '2% 6%',
-                  fontWeight: 'bold',
-                  fontSize: '18px',
-                  color: '#252525'
-                }}>
-                XP: {getPokemon.pokemon && getPokemon.pokemon.base_experience}
-              </Typography>
-              <Typography
-                variant="body2"
-                color="text.secondary"
-                style={{
-                  margin: '2% 6%',
-                  fontWeight: 'bold',
-                  fontSize: '18px',
-                  color: '#252525'
-                }}>
-                BTC: {getPokemon.pokemon && getPokemon.pokemon.base_experience}
-              </Typography>
-            </CardContent>
-            <CardContent style={{ background: '#edd678', }}>
-              <Typography
-                variant="body2"
-                color="text.secondary"
-                style={{
-                  margin: '0 6%',
-                  fontWeight: 'bold',
-                  fontSize: '18px',
-                  color: '#252525'
-                }}>
-                {`${changeValue} ${getPokemon.pokemon && getPokemon.pokemon.name} equivalem a BTC ${buyValue}`}
-              </Typography>
-            </CardContent>
-            <CardActions style={{ display: 'flex', justifyContent: 'center', padding: '45px 0' }}>
-              <Button
-                color="primary"
-                size="large"
-                variant="contained"
-                style={{ width: '75%', padding: '16px', fontSize: '1.2rem' }}
-                onClick={() => handlePurchese()}
-              >
-                comprar
-              </Button>
-            </CardActions>
-          </CardActionArea>
+          </CardContent>
+          <CardContent style={{ background: '#e0ba61', display: 'flex', height: '50px', alignItems: 'center' }}>
+            <Typography
+              variant="body2"
+              style={{
+                margin: '2% 6%',
+                fontWeight: 'bold',
+                fontSize: '1rem',
+                color: '#252525'
+              }}>
+              XP: {getPokemon.pokemon && getPokemon.pokemon.base_experience}
+            </Typography>
+            <Typography
+              variant="body2"
+              color="secondary"
+              style={{
+                margin: '2% 6%',
+                fontWeight: 'bold',
+                fontSize: '1rem',
+                color: '#252525'
+              }}>
+              BTC: {getPokemon.pokemon && getPokemon.pokemon.base_experience}
+            </Typography>
+          </CardContent>
+          <CardContent style={{ background: '#edd678', }}>
+            <Typography
+              variant="body2"
+              color="secondary"
+              style={{
+                margin: '0 6%',
+                fontWeight: 'bold',
+                fontSize: '1rem',
+                color: '#252525'
+              }}>
+              {`${changeValue} ${getPokemon.pokemon && getPokemon.pokemon.name} equivalem a BTC ${buyValue}`}
+            </Typography>
+          </CardContent>
+          <CardActions style={{ display: 'flex', justifyContent: 'center', padding: '45px 0' }}>
+            <Button
+              color="primary"
+              size="small"
+              variant="contained"
+              style={{ width: '75%', padding: '16px', fontSize: '1.2rem' }}
+              onClick={() => handlePurchese()}
+            >
+              comprar
+            </Button>
+          </CardActions>
         </Card>
       </Box>
     </S.MainContainer>

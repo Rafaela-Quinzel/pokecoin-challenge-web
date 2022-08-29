@@ -112,8 +112,7 @@ function SignUpPage() {
                 required
               />
 
-
-              <FormControl variant="outlined" required="true">
+              <FormControl variant="outlined" required>
                 <InputLabel
                   htmlFor="outlined-adornment-password"
                   margin="dense"
@@ -148,7 +147,7 @@ function SignUpPage() {
                 />
               </FormControl>
 
-              <FormControl variant="outlined" required="true" style={{ margin: '2px 0' }}>
+              <FormControl variant="outlined" required style={{ margin: '2px 0' }}>
                 <InputLabel
                   htmlFor="outlined-adornment-password"
                   margin="dense"

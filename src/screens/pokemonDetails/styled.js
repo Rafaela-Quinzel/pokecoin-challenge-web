@@ -2,11 +2,9 @@ import styled from 'styled-components';
 
 export const MainContainer = styled.div`
   width: 100vw;
-  height: 100%;
-  display: grid;
+  height: 100vh;
+  display: flex;
   align-items: center;
-  justify-items: center;
-  padding: 5% 0 2% 0;
-  box-sizing: border-box;
+  justify-content: center;
   background-color: #292929;
 `
