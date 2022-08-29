@@ -24,3 +24,35 @@ body, input, textarea, button {
     background: rgb(216, 214, 214);
 }
 
+.swal-wide-error{
+    width: 85% !important;
+    height: 85% !important;
+    font-size: 1rem !important;
+    color: red !important;
+}
+
+.swal-wide-success { 
+    width: 80% !important;
+    height: 80% !important;
+    font-size: 1rem !important;
+    color: rgb(11, 139, 139) !important;
+    font-weight: bold !important;
+
+}
+
+@media(min-width: 720px) {
+    .swal-wide-success { 
+        width: 45% !important;
+        height: 80% !important;
+        align-items: center !important;
+        font-size: 1.4rem !important;
+    }
+
+    .swal-wide-error{
+        width: 45% !important;
+        height: 80% !important;
+        align-items: center !important;
+        font-size: 1.2rem !important;
+        padding: 2% !important;
+    }
+}
