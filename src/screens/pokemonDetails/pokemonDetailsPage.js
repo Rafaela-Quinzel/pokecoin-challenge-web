@@ -61,7 +61,6 @@ function pokemonDetailsPage() {
           cancelButtonText: 'CANCELAR',
         }).then((result) => {
           if (result.isConfirmed) {
-            console.log('VALUE', change.value);
             const data = {
               type: "buy",
               pokemon: {
