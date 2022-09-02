@@ -50,7 +50,6 @@ function pokemonDetailsPage() {
       cancelButtonText: 'CANCELAR',
       reverseButtons: true
     }).then((change) => {
-      console.log('change', change);
       if (change.value) {
         setChangeValue(change.value);
         Swal.fire({
