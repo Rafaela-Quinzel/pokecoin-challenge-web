@@ -16,7 +16,7 @@ import {
 
 function PokemonCard(props) {
 
-    const history = useHistory()
+    const history = useHistory();
 
     return (
         <S.CardContainer>
