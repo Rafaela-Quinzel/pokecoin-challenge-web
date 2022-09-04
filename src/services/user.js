@@ -10,7 +10,7 @@ export const login = (body, history) => {
             localStorage.setItem('token', response.data.token);
             Swal.fire({
                 //icon: 'success',
-                //imageUrl: 'https://lh3.googleusercontent.com/EXOHMMD-wXatpjRbYSMqr127gDCSmqxtQ9J5PoV38vJOu_MMKnC8N2EJXlIgq_z-iyDrqntQ25vfg6cNfhWQa7HOrKiHaig_ZxbFf4A=w150',
+                imageUrl: 'https://lh3.googleusercontent.com/EXOHMMD-wXatpjRbYSMqr127gDCSmqxtQ9J5PoV38vJOu_MMKnC8N2EJXlIgq_z-iyDrqntQ25vfg6cNfhWQa7HOrKiHaig_ZxbFf4A=w150',
                 text: `Bem vindo (a) ${response.data.user.name}!`,
                 confirmButtonText: "OK",
                 customClass: 'swal-wide-success',

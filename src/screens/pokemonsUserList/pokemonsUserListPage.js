@@ -23,6 +23,7 @@ function PokemonsUserList() {
 
   return getPokemons && getPokemons.userPokemonList?.length !== 0 ? (
     <S.MainContainer>
+      <S.TitlePage>Pokemons Comprados:</S.TitlePage>
       <S.CardContainer>
         {getPokemons?.userPokemonList && getPokemons?.userPokemonList.map((pokemon, index) => {
           return (

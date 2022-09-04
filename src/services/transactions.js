@@ -16,7 +16,6 @@ export const purchase = async (body, history) => {
                     popup: 'animate__animated animate__fadeOutUp'
                 }
             });
-            //alert('Compra efetuada com sucesso!');
         }).catch(error => {
             console.log(error.message);
             Swal.fire({
@@ -25,7 +24,6 @@ export const purchase = async (body, history) => {
                 confirmButtonText: "OK",
                 customClass: 'swal-wide-error'
             });
-            //alert(`Ocorreu uma falha interna, tente novamente mais tarde`)
         });
 }
 
@@ -41,8 +39,10 @@ export const shell = async (body, history) => {
                 hideClass: {
                     popup: 'animate__animated animate__fadeOutUp'
                 }
+            }).then(result => {
+                if (result.isConfirmed) window.location.reload();
             });
-            //alert('Venda efetuada com sucesso!');
+
         }).catch(error => {
             console.log(error.message);
             Swal.fire({
@@ -51,7 +51,6 @@ export const shell = async (body, history) => {
                 confirmButtonText: "OK",
                 customClass: 'swal-wide-error'
             });
-            //alert(`Ocorreu uma falha interna, tente novamente mais tarde`)
         });
 }
 
@@ -67,7 +66,6 @@ export const getHistoryTicker = async (setData) => {
                 confirmButtonText: "OK",
                 customClass: 'swal-wide-error'
             });
-            //alert(`Ocorreu uma falha interna, tente novamente mais tarde`)
         });
 }
 
@@ -75,15 +73,13 @@ export const getTransactionsUser = async (setTransactions) => {
     await axios.get(`${BASE_URL}transactions`, axiosConfig)
         .then(response => {
             setTransactions(response.data);
-            //setTransactions(response.data.transactions);
         }).catch(error => {
             console.log(error.message);
             Swal.fire({
                 icon: 'error',
-                    text: `Ocorreu uma falha interna, tente novamente mais tarde.`,
-                    confirmButtonText: "OK",
-                    customClass: 'swal-wide-error'
-                });
-            //alert(`Ocorreu uma falha interna, tente novamente mais tarde`)
+                text: `Ocorreu uma falha interna, tente novamente mais tarde.`,
+                confirmButtonText: "OK",
+                customClass: 'swal-wide-error'
+            });
         });
 }

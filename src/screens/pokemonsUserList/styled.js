@@ -25,7 +25,13 @@ export const NoResults = styled.div`
   padding: 20% 0 10% 0;
 `
 
-export const TitleNoResults = styled.div`
+export const TitleNoResults = styled.h3`
   text-align: center;
+  color: #fff;
+`
+
+export const TitlePage = styled.h3`
+  text-align: center;
+  margin-top: 50px;
   color: #fff;
 `

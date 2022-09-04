@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import * as S from './styled';
 import { useHistory } from 'react-router-dom';
 import { useForm } from '../../hooks/useForm';
-import { useProtectPage } from '../../hooks/useProtectPage';
 import useUnProtectedPage from '../../hooks/useUnProtectedPage';
 import { login } from '../../services/user'
 import { goToSignUp } from '../../routes/coordinator';
@@ -33,7 +32,6 @@ function LoginPage() {
     password: "",
   });
 
-  useProtectPage();
   useUnProtectedPage();
 
   const history = useHistory();

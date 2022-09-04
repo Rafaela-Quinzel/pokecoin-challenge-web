@@ -16,17 +16,18 @@ import {
 function PokemonUserCard(props) {
     const [changeValue, setChangeValue] = useState(0);
     const [data, setData] = useState(undefined);
+    const [BTC, setBTC] = useState(0);
 
     useEffect(() => {
         getHistoryTicker(setData);
         //getTransactionsUser(setTransactions);
     }, []);
 
-    const btcValue = Number(data && data.ticker.buy) / 100000000;
+    const bitcoinSellValue = Number(data && data.ticker.sell) / 100000000;
 
-    const handleSell = (pokemon) => {
+    const handleSell = async(pokemon) => {
         Swal.fire({
-            title: 'Quantos você deseja vender?',
+            title: `Quantos você ${pokemon.pokemonName} deseja vender?`,
             input: 'number',
             icon: 'question',
             showCancelButton: true,
@@ -34,42 +35,54 @@ function PokemonUserCard(props) {
             cancelButtonText: 'CANCELAR',
             reverseButtons: true
         }).then((change) => {
+
             if (change.value) {
                 setChangeValue(change.value);
-                Swal.fire({
-                    icon: 'question',
-                    text: `Você confirmar a venda de ${change.value} ${pokemon.pokemonName}?`,
-                    showCancelButton: true,
-                    confirmButtonText: 'CONTINUAR',
-                    cancelButtonText: 'CANCELAR',
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        let BTC = btcValue * Number(pokemon.pokemonBaseXP);
 
-                        const data = {
-                            type: "sell",
-                            pokemon: {
-                                name: pokemon.pokemonName,
-                                image: pokemon.pokemonImage,
-                                id: pokemon.pokemonId,
-                                types: pokemon.pokemonTypes,
-                                baseXP: pokemon.pokemonBaseXP,
-                            },
-                            info: {
-                                BTCDay: BTC,
-                                quotas: pokemon.quotas,
-                                value: pokemon.value
+                if (Number(change.value) > pokemon.quotas) {
+                    Swal.fire({
+                        title: `Você tem somente ${pokemon.quotas} ${pokemon.pokemonName}.`,
+                        icon: 'warning',
+                        reverseButtons: true
+                    });
+
+                } else {
+                    Swal.fire({
+                        icon: 'question',
+                        text: `Você confirmar a venda de ${change.value} ${pokemon.pokemonName}?`,
+                        showCancelButton: true,
+                        confirmButtonText: 'CONTINUAR',
+                        cancelButtonText: 'CANCELAR',
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            let BTC = bitcoinSellValue * Number(pokemon.pokemonBaseXP);
+                            setBTC(BTC)
+
+                            let pokemonSellValue = BTC * Number(change.value);
+
+                            const data = {
+                                type: "sell",
+                                pokemon: {
+                                    name: pokemon.pokemonName,
+                                    image: pokemon.pokemonImage,
+                                    id: pokemon.pokemonId,
+                                    types: pokemon.pokemonTypes,
+                                    baseXP: pokemon.pokemonBaseXP,
+                                },
+                                info: {
+                                    BTCDay: BTC,
+                                    quotas: Number(change.value),
+                                    value: pokemonSellValue
+                                }
                             }
+
+                            shell(data);
+
+                        } else if (result.dismiss === Swal.DismissReason.cancel) {
+                            Swal.fire('Venda cancelada!')
                         }
-
-                        shell(data);
-
-                    } else if (
-                        result.dismiss === Swal.DismissReason.cancel
-                    ) {
-                        Swal.fire('Venda cancelada!')
-                    }
-                });
+                    });
+                }
             }
         });
     }
@@ -84,7 +97,7 @@ function PokemonUserCard(props) {
                     <CardMedia
                         component="img"
                         image={props.pokemon.pokemonImage}
-                        alt="pokemon image"
+                        alt={props.pokemon.pokemonName}
                     />
                 </CardContent>
                 <CardContent style={{ background: 'rgb(238, 136, 34)', color: '#252525' }}>
@@ -101,9 +114,8 @@ function PokemonUserCard(props) {
                         variant="body2"
                         style={{ margin: '2% 6%', fontWeight: 'bold', fontSize: '16px', }}
                     >
-                        COTAS: {props.pokemon.quotas}
+                        Quantidade de cotas: {props.pokemon.quotas}
                     </Typography>
-
                 </CardContent>
                 <CardContent style={{ background: '#edd678', display: 'flex' }}>
                     <Typography
@@ -114,9 +126,22 @@ function PokemonUserCard(props) {
                             fontSize: '16px',
                             color: '#252525'
                         }}>
-                        VALOR: {props.pokemon.value}
+                        Preço de venda por cota: {bitcoinSellValue}
                     </Typography>
                 </CardContent>
+                <CardContent style={{ background: '#f3e4a9', display: 'flex' }}>
+                    <Typography
+                        variant="body2"
+                        style={{
+                            margin: '2% 6%',
+                            fontWeight: 'bold',
+                            fontSize: '16px',
+                            color: '#252525'
+                        }}>
+                        Valor em BTC: {bitcoinSellValue}
+                    </Typography>
+                </CardContent>
+
                 <CardActions style={{ display: 'flex', justifyContent: 'center', padding: '30px 0' }}>
                     <Button
                         color="secondary"
