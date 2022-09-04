@@ -31,14 +31,14 @@ function pokemonDetailsPage() {
   const getPokemon = useRequestData(`${BASE_URL}pokemon/${id}`, axiosConfig);
 
   useEffect(() => {
-    getHistoryTicker(setData)
+    getHistoryTicker(setData);
   }, []);
 
   const btcValue = Number(data && data.ticker.buy) / 100000000;
 
-  let BTC = btcValue * Number(getPokemon?.pokemon?.base_experience);
-
-  let buyValue = BTC * changeValue;
+  let BTC = Number(btcValue * getPokemon?.pokemon?.base_experience);
+  
+  let buyValue = BTC * Number(changeValue);
 
   const handlePurchese = () => {
     Swal.fire({
@@ -49,12 +49,17 @@ function pokemonDetailsPage() {
       confirmButtonText: 'COMPRAR',
       cancelButtonText: 'CANCELAR',
       reverseButtons: true
+
     }).then((change) => {
       if (change.value) {
+
         setChangeValue(change.value);
+
+        let value = BTC * Number(change.value);
+
         Swal.fire({
           icon: 'info',
-          text: `${change.value} ${getPokemon.pokemon && getPokemon.pokemon.name} equivalem a BTC ${buyValue}`,
+          text: `${change.value} ${getPokemon.pokemon && getPokemon.pokemon.name} equivalem a BTC ${value}`,
           showCancelButton: true,
           confirmButtonText: 'CONTINUAR',
           cancelButtonText: 'CANCELAR',
@@ -71,8 +76,8 @@ function pokemonDetailsPage() {
               },
               info: {
                 BTCDay: BTC,
-                quotas: change.value,
-                value: buyValue
+                quotas: Number(change.value),
+                value: value
               }
             }
 
@@ -134,7 +139,7 @@ function pokemonDetailsPage() {
                 fontSize: '1rem',
                 color: '#252525'
               }}>
-              BTC: {getPokemon.pokemon && getPokemon.pokemon.base_experience}
+              BTC: {BTC}
             </Typography>
           </CardContent>
           <CardContent style={{ background: '#edd678', }}>

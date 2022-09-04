@@ -29,7 +29,7 @@ function PokemonCard(props) {
                         <CardMedia
                             component="img"
                             image={props.pokemon.image}
-                            alt="pokemon image"
+                            alt={props.pokemon.image}
                         />
                     </CardContent>
                     <CardActions style={{ display: 'flex', justifyContent: 'center', padding: '30px 0' }}>
