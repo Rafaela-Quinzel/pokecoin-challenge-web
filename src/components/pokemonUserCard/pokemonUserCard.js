@@ -14,9 +14,7 @@ import {
 
 
 function PokemonUserCard(props) {
-    const [changeValue, setChangeValue] = useState(0);
     const [data, setData] = useState(undefined);
-    const [BTC, setBTC] = useState(0);
 
     useEffect(() => {
         getHistoryTicker(setData);
@@ -25,9 +23,11 @@ function PokemonUserCard(props) {
 
     const bitcoinSellValue = Number(data && data.ticker.sell) / 100000000;
 
-    const handleSell = async(pokemon) => {
+    const BTC = Number(bitcoinSellValue * props.pokemon.pokemonBaseXP);
+
+    const handleSell = async (pokemon) => {
         Swal.fire({
-            title: `Quantos você ${pokemon.pokemonName} deseja vender?`,
+            title: `Quantos ${pokemon.pokemonName} você deseja vender?`,
             input: 'number',
             icon: 'question',
             showCancelButton: true,
@@ -37,7 +37,6 @@ function PokemonUserCard(props) {
         }).then((change) => {
 
             if (change.value) {
-                setChangeValue(change.value);
 
                 if (Number(change.value) > pokemon.quotas) {
                     Swal.fire({
@@ -49,15 +48,13 @@ function PokemonUserCard(props) {
                 } else {
                     Swal.fire({
                         icon: 'question',
-                        text: `Você confirmar a venda de ${change.value} ${pokemon.pokemonName}?`,
+                        text: `Você confirma a venda de ${change.value} ${pokemon.pokemonName}?`,
                         showCancelButton: true,
                         confirmButtonText: 'CONTINUAR',
                         cancelButtonText: 'CANCELAR',
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            let BTC = bitcoinSellValue * Number(pokemon.pokemonBaseXP);
-                            setBTC(BTC)
-
+                     
                             let pokemonSellValue = BTC * Number(change.value);
 
                             const data = {
@@ -126,7 +123,7 @@ function PokemonUserCard(props) {
                             fontSize: '16px',
                             color: '#252525'
                         }}>
-                        Preço de venda por cota: {bitcoinSellValue}
+                        Preço de venda por cota: {BTC}
                     </Typography>
                 </CardContent>
                 <CardContent style={{ background: '#f3e4a9', display: 'flex' }}>
@@ -138,7 +135,7 @@ function PokemonUserCard(props) {
                             fontSize: '16px',
                             color: '#252525'
                         }}>
-                        Valor em BTC: {bitcoinSellValue}
+                        Valor em BTC: {props.pokemon.value}
                     </Typography>
                 </CardContent>
 
